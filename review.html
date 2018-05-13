@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Untitled Document</title>
+<!-- Stylesheets and Fonts -->
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/main.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Exo+2|IBM+Plex+Sans|Roboto" rel="stylesheet">
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="js/jquery-3.3.1.js"></script>
+<!-- Popper (nescessary for Bootstrap's Tooltips, popovers, ect.) -->
+<script src="js/popper.js"></script>
+<!-- Bootstrap -->
+<script src="js/bootstrap.js"></script>
+<!-- Icons! -->
+<script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="content">
+  <div class="container">
+    <div class="jumbotron text-center">
+      <h1 class="display-4">Review</h1>
+      <hr class="my-4">
+      <form>
+        <fieldset id="name" disabled>
+          <div class="form-group">
+            <label for="disabledTextInput">Name</label>
+            <div class="input-group mb-2">
+              <div class="input-group-prepend">
+                <div class="input-group-text clickableIcon" id="edit"><i class="fas fa-edit"></i></div>
+              </div>
+              <input type="text" id="nameInput" class="form-control" placeholder="">
+            </div>
+          </div>
+        </fieldset>
+      </form>
+      <div class="row">
+        <div class="col-4">
+          <form class="form-inline">
+            <div class="form-row align-items-center">
+            <fieldset class="form-group">
+            <div class="row">
+            <legend class="col-form-label col-sm-2 my-auto">Voice:</legend>
+            <div class="col-sm-10">
+              <div class="btn-group btn-group-toggle" data-toggle="buttons">
+              <label class="btn btn-secondary active">
+    <input type="radio" name="options" id="option1" autocomplete="off" checked> On
+  </label>
+  <label class="btn btn-secondary">
+    <input type="radio" name="options" id="option2" autocomplete="off"> Off
+  </label>
+              </div>
+            </div>
+            </div>
+            </fieldset>
+            </div>
+          </form>
+          </div>
+          <div class="col-8">
+          	<div id="canvasPlaceholder"><canvas id="blankCanvas"></canvas> </div>
+          </div>
+        </div>
+      <hr class="my-4">
+    </div>
+  </div>
+  <!-- Buttons -->
+  <div class="container navButtons" >
+    <div class="row justify-content-between">
+      <div class="col-4 text-center" > <a href="#capture" id="capture" title="capture" role="button" class="btn btn-outline-warning btn-lg btn-block">Back</a> </div>
+      <div class="col-4 text-center"> <a href="index.html" id="index" title="index" role="button" class="btn btn-success btn-lg btn-block">Finish</a> </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,402 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Facial Recognition RWU</title>
+<!-- Stylesheets and Fonts -->
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/main.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Exo+2|IBM+Plex+Sans|Roboto" rel="stylesheet">
+<link href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="js/jquery-3.3.1.js"></script>
+<!-- Popper (nescessary for Bootstrap's Tooltips, popovers, ect.) -->
+<script src="js/popper.js"></script>
+<!-- Bootstrap -->
+<script src="js/bootstrap.js"></script>
+<!-- Icons! -->
+<script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
+<script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+</head>
+
+<body>
+<div class="row">
+<div class="col-auto mr-auto"></div>
+ <div class="col-auto"><a href="index.html" class="text-danger"><i class="fas fa-times-circle fa-2x"></i>
+</a></div>
+</div>
+<div id="content">
+  <div class="container">
+    <div class="jumbotron text-center">
+      <h1 class="display-4">Welcome to </h1>
+      <h1 class="display-4">Roger Williams University</h1>
+      <h1 class="display-4">Facial Recognition Application </h1>
+    </div>
+  </div>
+  <!-- Buttons -->
+  <div class="container navButtons" >
+    <div class="row justify-content-between">
+      <div class="col-4" id="settingIcon"> <span class="clickableIcon" id="settings"><i class="fas fa-cog fa-3x"></i></span> </div>
+      <div class="col-4 text-center"> <a href="#terms" id="terms" title="terms" role="button" class="btn btn-primary btn-lg btn-block">Start</a> </div>
+    </div>
+  </div>
+</div>
+<!-- Stuff shared between pages --> 
+<!-- Modal -->
+<div class="modal fade" id="ttsModal" tabindex="-1" role="dialog" aria-labelledby="ttsModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center" id="voicePlayback">Voice Playback</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+      </div>
+      <div class="modal-body text-center"> Are you ok with this voice? </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger" id="noVoice">No, Turn off Voice</button>
+        <button type="button" class="btn btn-outline-warning"  data-toggle="modal" data-target="#ttsModal2">No, Record my Own</button>
+        <button type="button" class="btn btn-primary" id="confirmVoice">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal2 -->
+<div class="modal fade" id="ttsModal2" tabindex="-1" role="dialog" aria-labelledby="ttsModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center" id="recordVoice">Voice Record</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+      </div>
+      <div class="modal-body text-center"> Press Record to start, press again to stop. </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-outline-warning" id ="record">Record</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Finish</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- error modal -->
+<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Error!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+      </div>
+      <div class="modal-body"> Please contact Site Admin, There was an error loading the next page. </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Settings -->
+<div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="ttsModal" aria-hidden="true">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center" id="settingTitle">Settings</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+      </div>
+      <div class="modal-body text-center">
+        <button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#deleteModal">Delete User</button>
+        <button type="button" class="btn btn-success btn-block"  id="startPresentation">Start Presentation</button>
+        <button type="button" class="btn btn-primary btn-block" data-dismiss="modal">Advance Settings</button>
+        <button type="button" class="btn btn-warning btn-block" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--deleteUser-->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="ttsModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center" id="deleteTitle">Delete User</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+      </div>
+      <div class="modal-body text-center">
+        <table id="userList" class="display" style="width:100%">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th>Title</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteConfirmModal">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Delete Confirmation modal -->
+<div class="modal fade" id="deleteConfirmModal" tabindex="-1" role="dialog" aria-labelledby="errorModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteConfirmlLabel">Confirm Delete</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+      </div>
+      <div class="modal-body"> Are you sure you want to delete user? </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" id="confirmDelete" data-dismiss="modal">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="hidden" id="hiddenCanvas">
+ 
+</div>
+<script>
+var enteredName;
+var voiceSetting;
+$(document).ready(function() {
+    $('#noVoice').click(function() {
+        voiceSetting = false;
+        $('#ttsModal').modal('toggle')
+
+    });
+    $('#confirmVoice').click(function() {
+        voiceSetting = true;
+        $('#ttsModal').modal('toggle')
+
+    });
+    $("#settings").click(function() {
+        $('#settingsModal').modal('toggle')
+    });
+    var table = $('#userList').DataTable({
+        "processing": true,
+        "ajax": {
+            "url": "https://randomuser.me/api/?inc=name&results=50&noinfo",
+            "dataSrc": "results"
+        },
+        "columns": [{
+                "data": "name.title"
+            },
+            {
+                "data": "name.first"
+            },
+            {
+                "data": "name.last"
+            }
+        ]
+    });
+
+    $('#userList tbody').on('click', 'tr', function() {
+        if ($(this).hasClass('selected')) {
+            $(this).removeClass('selected');
+        } else {
+            table.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+        }
+    });
+    $('#confirmDelete').click(function() {
+        table.row('.selected').remove().draw(false);
+    });
+    //} );
+    $("#startPresentation").click(function() {
+        $('#settingsModal').modal('toggle')
+        var contentDiv = $("#content");
+        $(contentDiv).empty().load("present.html", function(response, status, xhr) {
+            // function to call after the load.
+            if (response == "error") {
+                $('#errorModal').modal('show')
+            } else {
+                if (hasGetUserMedia()) {
+                    enableWebcam();
+                    jsonSingleUser.open("GET", "https://randomuser.me/api/?inc=name&noinfo", true);
+                    jsonSingleUser.send();
+                } else {
+                    // alert('getUserMedia() is not supported by your browser');
+                }
+            }
+        });
+    });
+    $(".navButtons a").click(function() {
+        var title = this.title;
+        var contentDiv = $("#content");
+        if (title == "index") {
+            return;
+        }
+        $(contentDiv).empty().load(title + ".html", function(response, status, xhr) {
+            // function to call after the load.
+            if (response == "error") {
+                $('#errorModal').modal('show')
+            } else {
+                reattachButton();
+            }
+        });
+    });
+});
+//https://randomuser.me/api/?inc=name&results=50&noinfo
+//https://randomuser.me/api/?inc=name&noinfo
+var jsonSingleUser = new XMLHttpRequest();
+jsonSingleUser.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        var myObj = JSON.parse(this.responseText);
+        var name = myObj.results[0].name
+        var text = name.title + ' ' + name.first + ' ' + name.last;
+        $('#welcomeText').text('Welcome ' + text + '!');
+        addTTSPresent(text);
+    }
+};
+
+function enableEdit() {
+    $('#name').prop("disabled", false);
+}
+
+function loadPage(title) {
+    var contentDiv = $("#content");
+    $(contentDiv).empty().load(title + ".html", function(response, status, xhr) {
+        // function to call after the load.
+        if (response == "error") {
+            $('#errorModal').modal('show')
+        } else {
+            reattachButton();
+            executeAfterLoad(title);
+        }
+    });
+}
+
+function executeAfterLoad(title) {
+    if (title == "name") {
+        if (enteredName != "") {
+            $("#enterName").val(enteredName);
+        }
+    }
+
+    if (title == "capture") {
+        $('#capture').prop('onclick', null).off('click');
+        $("#hiddenCanvas").append(" <canvas id='pic'></canvas>");
+        if (hasGetUserMedia()) {
+            enableWebcam();
+        } else {
+            // alert('getUserMedia() is not supported by your browser');
+        }
+    }
+    if (title == "review") {
+        cloneCanvas();
+        //addTTS();
+        $('#nameInput').val(enteredName);
+        $('#edit').click(enableEdit());
+    }
+}
+
+function reattachButton() {
+    $(".navButtons a").click(function() {
+        var title = this.title;
+        var id = this.id;
+        var contentDiv = $("#content");
+        if (title == "index") {
+            return;
+        }
+        //Things to do before page load
+        if (id == "captureFromTitle") {
+			 enteredName = $("#enterName").val();
+            startTTS();
+        }
+        //Load Page
+        loadPage(title)
+    });
+}
+
+function startTTS() {
+    if ('speechSynthesis' in window) {
+        var synth = window.speechSynthesis;
+        var flag = false;
+        if (!flag) {
+            $('#ttsModal').modal('toggle')
+            flag = true;
+            var utterance = new SpeechSynthesisUtterance(
+                enteredName);
+            utterance.voice = synth.getVoices()[1];
+            utterance.onend = function() {
+                flag = false;
+            };
+            utterance.pitch = 2;
+            synth.speak(utterance);
+        }
+    }
+}
+
+function addTTSPresent(textTS) {
+    if ('speechSynthesis' in window) {
+        var synth = window.speechSynthesis;
+        var flag = false;
+        if (!flag) {
+            flag = true;
+            var utterance = new SpeechSynthesisUtterance(textTS);
+            utterance.voice = synth.getVoices()[1];
+            utterance.onend = function() {
+                flag = false;
+            };
+            utterance.pitch = 2;
+            synth.speak(utterance);
+        }
+    }
+}
+
+function hasGetUserMedia() {
+    return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
+}
+
+
+function enableWebcam() {
+    const constraints = {
+        video: true
+    };
+
+    const video = document.querySelector('video');
+    const canvas = document.getElementById('pic');
+    const button = $("#takePicture");
+    $("#review").on("click", function() {
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        canvas.getContext('2d').drawImage(video, 0, 0);
+    });
+
+    function handleSuccess(stream) {
+        video.srcObject = stream;
+    }
+
+    function handleError(error) {
+        console.error('Reeeejected!', error);
+    }
+    navigator.mediaDevices.getUserMedia(constraints).
+    then(handleSuccess).catch(handleError);
+}
+
+function cloneCanvas() {
+    var oldCanvas = document.getElementById('pic');
+    //create a new canvas
+    var newCanvas = document.getElementById('blankCanvas');
+    var context = newCanvas.getContext('2d');
+
+    //set dimensions
+    newCanvas.width = oldCanvas.width;
+    newCanvas.height = oldCanvas.height;
+
+    //apply the old canvas to the new one
+    context.drawImage(oldCanvas, 0, 0);
+    // Delete old canvas
+    $("#pic").remove();
+    //return the new canvas
+    return newCanvas;
+}
+</script>
+</body>
+</html>

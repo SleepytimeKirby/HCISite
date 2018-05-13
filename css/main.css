@@ -1,0 +1,52 @@
+/* CSS Document */
+/*Overrides */
+.display-4{
+font-family: 'IBM Plex Sans', sans-serif;
+}
+
+p{
+	font-family: 'Roboto', sans-serif;
+}
+.jumbotron{
+	background-color: #FFFFFF;
+	margin-top:50px;
+	color:#002F55;
+	margin-bottom:60px;
+
+}
+.terms{
+	height: 456; 
+  	overflow-y: scroll; 
+}
+.btn-outline-warning{
+	border-color:#816008;
+	color: #816008;
+}
+.btn-primary{
+	background-color:#003760;
+	border-color:#003760;
+}
+/* Custom */
+
+body {
+	background-color: #E6E6E6;
+}
+#settingIcon{
+	color: #444444;	
+}
+#playbackText {
+	margin-top:50px;
+}
+.clickableIcon {
+    cursor: pointer;	
+}
+.computerText{
+	font-family: 'Exo 2',sans-serif;
+}
+#welcomeText{
+	font-size:24px;	
+}
+#hiddenCanvas{
+    display: none !important;
+    visibility: hidden !important;	
+}
